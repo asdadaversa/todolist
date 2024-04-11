@@ -13,11 +13,16 @@
     {% for task in list_tasks %}
 
        <h5>
+
           <strong>{{ task.content }}</strong>
          {% if task.task_done %}
          <span class="text-success">Done</span>
+         <a style="float: right" href="{% url 'task:task-undo' pk=task.id %}" class="btn btn-secondary">undo</a>
+
          {% else %}
          <span class="text-danger">Not Done</span>
+         <a style="float: right" href="{% url 'task:task-complete' pk=task.id %}" class="btn btn-success">complete</a>
+
          {% endif %}
        </h5>
 <br>
