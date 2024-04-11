@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>TODO list</h1>
+<br>
+    {% for task in list_tasks %}
+
+       <h5>
+          <strong>{{ task.content }}</strong>
+         {% if task.task_done %}
+         <span class="text-success">Done</span>
+         {% else %}
+         <span class="text-danger">Not Done</span>
+         {% endif %}
+       </h5>
+<br>
+        <p class="fst-italic">{{ task.datetime }}, {{ task.deadline }}</p>
+        <p class="fw-weight-lighter">{{ task.task_done }}</p>
+        <p>Tags: {% for tag in task.tags.all %}{{ tag }}, {% endfor %}</p>
+<hr>
+    {% endfor %}
+{% endblock %}
