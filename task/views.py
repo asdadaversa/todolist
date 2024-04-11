@@ -9,11 +9,11 @@ from task.models import Task, Tag
 
 class TaskListView(generic.ListView):
     model = Task
-    paginate_by = 3
+    paginate_by = 4
     template_name = "task/index.html"
 
     def get_queryset(self):
-        queryset = Task.objects.all()
+        queryset = Task.objects.order_by("task_done")
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
