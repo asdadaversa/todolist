@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
@@ -29,21 +29,21 @@ def tags(request: HttpRequest) -> HttpResponse:
 
     context = {
         "tags_list": tags_list,
-       }
+    }
 
     return render(request, "task/tags.html", context=context)
 
 
 class TaskCreateView(generic.CreateView):
     model = Task
-    template_name = 'task/task_form.html'
+    template_name = "task/task_form.html"
     success_url = reverse_lazy("task:index")
     form_class = TaskCreateForm
 
 
 class TagCreateView(generic.CreateView):
     model = Tag
-    template_name = 'task/tag_form.html'
+    template_name = "task/tag_form.html"
     success_url = reverse_lazy("task:tags")
     form_class = TagCreateForm
 
@@ -84,26 +84,3 @@ def task_undo(request: HttpRequest, pk: int) -> HttpResponse:
         task.task_done = False
         task.save()
     return redirect("task:index")
-
-# def add_comment(request: HttpRequest, pk: int) -> HttpResponse:
-#     if request.method == "POST":
-#         user = request.user
-#         if not user.is_authenticated:
-#             raise ValidationError("User has to be authenticated!")
-#         post_id = request.POST.get("post_id")
-#         content = request.POST.get("content")
-#         post = Post.objects.get(pk=post_id)
-#         Commentary.objects.create(
-#             user=user,
-#             post=post,
-#             content=content,
-#         )
-#         return redirect("blog:post-detail", pk=post_id)
-#
-# @login_required()
-# def car_delete_driver(
-#         request: HttpRequest,
-#         pk: int,
-# ) -> HttpResponse:
-#     Car.objects.get(id=pk).drivers.remove(request.user)
-#     return redirect("taxi:car-detail", pk)

@@ -16,7 +16,7 @@ class Task(models.Model):
     tags = models.ManyToManyField(Tag, related_name="tasks", blank=True)
 
     class Meta:
-        ordering = ("created", )
+        ordering = ("created",)
 
     def __str__(self):
         return self.content
