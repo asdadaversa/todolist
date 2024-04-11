@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>TODO list</h1>
+    <h1>
+      TODO list
+
+      <a
+      style="float: right" href="{% url 'task:task-create' %}">
+      <input class="btn btn-primary" type="submit" value="Add task">
+      </a>
+    </h1>
+
 <br>
     {% for task in list_tasks %}
 
@@ -13,9 +21,19 @@
          {% endif %}
        </h5>
 <br>
-        <p class="fst-italic">{{ task.datetime }}, {{ task.deadline }}</p>
+        <p class="fst-italic">
+          Created: {{ task.created }}
+          <span class="text-danger">Deadline: {{ task.deadline }}</span>
+        </p>
         <p class="fw-weight-lighter">{{ task.task_done }}</p>
-        <p>Tags: {% for tag in task.tags.all %}{{ tag }}, {% endfor %}</p>
+        <p>
+
+          Tags: {% for tag in task.tags.all %}{{ tag }} {% endfor %}
+          <a href="{% url 'task:task-update' pk=task.id %}">
+          <input class="btn btn-secondary" type="submit" value="update"></a>
+          <a href="{% url 'task:task-delete' pk=task.id %}">
+          <input class="btn btn-danger" type="submit" value="delete"></a>
+        </p>
 <hr>
     {% endfor %}
 {% endblock %}
