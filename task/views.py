@@ -46,3 +46,16 @@ class TagCreateView(generic.CreateView):
     template_name = 'task/tag_form.html'
     success_url = reverse_lazy("tag:index")
     form_class = TagCreateForm
+
+
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    form_class = TaskCreateForm
+    success_url = reverse_lazy("task:index")
+
+
+class TagUpdateView(generic.UpdateView):
+    model = Tag
+    form_class = TagCreateForm
+    success_url = reverse_lazy("tag:index")
+
