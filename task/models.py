@@ -19,4 +19,4 @@ class Task(models.Model):
         ordering = ("datetime", )
 
     def __str__(self):
-        return f"content: {self.content}"
+        return self.content

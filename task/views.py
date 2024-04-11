@@ -7,15 +7,20 @@ from task.forms import TaskCreateForm, TagCreateForm
 from task.models import Task, Tag
 
 
-def index(request: HttpRequest) -> HttpResponse:
+class TaskListView(generic.ListView):
+    model = Task
+    paginate_by = 3
+    template_name = "task/index.html"
 
-    list_tasks = Task.objects.all()
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        return queryset
 
-    context = {
-        "list_tasks": list_tasks,
-       }
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TaskListView, self).get_context_data(**kwargs)
+        context["list_tasks"] = context["object_list"]
 
-    return render(request, "task/index.html", context=context)
+        return context
 
 
 def tags(request: HttpRequest) -> HttpResponse:
