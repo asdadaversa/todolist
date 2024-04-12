@@ -22,16 +22,20 @@ class TaskListView(generic.ListView):
 
         return context
 
+class TagListView(generic.ListView):
+    model = Tag
+    paginate_by = 4
+    template_name = "task/tag.html"
 
-def tags(request: HttpRequest) -> HttpResponse:
+    def get_queryset(self):
+        queryset = Tag.objects.all()
+        return queryset
 
-    tags_list = Tag.objects.all()
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TaskListView, self).get_context_data(**kwargs)
+        context["tags_list"] = context["object_list"]
 
-    context = {
-        "tags_list": tags_list,
-    }
-
-    return render(request, "task/tags.html", context=context)
+        return context
 
 
 class TaskCreateView(generic.CreateView):
@@ -70,17 +74,11 @@ class TagDeleteView(generic.DeleteView):
     success_url = reverse_lazy("task:tags")
 
 
-def task_complete(request: HttpRequest, pk: int) -> HttpResponse:
+def task_complete_undo(request: HttpRequest, pk: int) -> HttpResponse:
     task = get_object_or_404(Task, pk=pk)
     if task.task_done is False:
         task.task_done = True
-        task.save()
-    return redirect("task:index")
-
-
-def task_undo(request: HttpRequest, pk: int) -> HttpResponse:
-    task = get_object_or_404(Task, pk=pk)
-    if task.task_done is True:
+    else:
         task.task_done = False
-        task.save()
+    task.save()
     return redirect("task:index")
