@@ -25,14 +25,14 @@ class TaskListView(generic.ListView):
 class TagListView(generic.ListView):
     model = Tag
     paginate_by = 4
-    template_name = "task/tag.html"
+    template_name = "tasks/tag.html"
 
     def get_queryset(self):
         queryset = Tag.objects.all()
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(TaskListView, self).get_context_data(**kwargs)
+        context = super(TagListView, self).get_context_data(**kwargs)
         context["tags_list"] = context["object_list"]
 
         return context
