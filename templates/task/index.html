@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>
+      TODO list
+
+      <a
+      style="float: right" href="{% url 'task:task-create' %}">
+      <input class="btn btn-primary" type="submit" value="Add task">
+      </a>
+    </h1>
+
+<br>
+    {% for task in list_tasks %}
+
+       <h5>
+
+          <strong>{{ task.content }}</strong>
+         {% if task.task_done %}
+         <span class="text-success">Done</span>
+         <a style="float: right" href="{% url 'task:task-complete-undo' pk=task.id %}" class="btn btn-secondary">undo</a>
+
+         {% else %}
+         <span class="text-danger">Not Done</span>
+         <a style="float: right" href="{% url 'task:task-complete-undo' pk=task.id %}" class="btn btn-success">complete</a>
+
+         {% endif %}
+       </h5>
+<br>
+
+        <p class="fst-italic">
+          Created: {{ task.created }}
+          <span class="text-danger">Deadline: {{ task.deadline }}</span>
+        </p>
+          Tags: {% for tag in task.tags.all %}{{ tag }} {% endfor %}
+          <a href="{% url 'task:task-update' pk=task.id %}">
+          <input class="btn btn-secondary" type="submit" value="update"></a>
+          <a href="{% url 'task:task-delete' pk=task.id %}">
+          <input class="btn btn-danger" type="submit" value="delete"></a>
+        </p>
+<hr>
+    {% endfor %}
+{% endblock %}

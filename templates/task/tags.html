@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>
+      Tags
+      <a
+      style="float: right" href="{% url 'task:tag-create' %}">
+      <input class="btn btn-primary" type="submit" value="Add tag">
+      </a>
+    </h1>
+<br>
+<hr>
+
+  {% if tags_list %}
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+
+      {% for tag in tags_list %}
+        <tr>
+          <td>
+              {{ tag.name }}
+          </td>
+
+          <td>
+            <a
+      href="{% url 'task:tag-update' pk=tag.id %}">
+      <input class="btn btn-secondary" type="submit" value="Update">
+      </a>
+            </td>
+            <td>
+            <a
+      href="{% url 'task:tag-delete' pk=tag.id %}">
+      <input class="btn btn-secondary" type="submit" value="delete">
+      </a>
+            </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+      <p>There are no tags.</p>
+  {% endif %}
+{% endblock %}
