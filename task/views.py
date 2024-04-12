@@ -22,10 +22,11 @@ class TaskListView(generic.ListView):
 
         return context
 
+
 class TagListView(generic.ListView):
     model = Tag
     paginate_by = 4
-    template_name = "tasks/tag.html"
+    template_name = "task/tags.html"
 
     def get_queryset(self):
         queryset = Tag.objects.all()
@@ -76,9 +77,6 @@ class TagDeleteView(generic.DeleteView):
 
 def task_complete_undo(request: HttpRequest, pk: int) -> HttpResponse:
     task = get_object_or_404(Task, pk=pk)
-    if task.task_done is False:
-        task.task_done = True
-    else:
-        task.task_done = False
+    task.task_done = not task.task_done
     task.save()
     return redirect("task:index")
