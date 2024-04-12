@@ -31,9 +31,6 @@
           Created: {{ task.created }}
           <span class="text-danger">Deadline: {{ task.deadline }}</span>
         </p>
-        <p class="fw-weight-lighter">{{ task.task_done }}</p>
-        <p>
-
           Tags: {% for tag in task.tags.all %}{{ tag }} {% endfor %}
           <a href="{% url 'task:task-update' pk=task.id %}">
           <input class="btn btn-secondary" type="submit" value="update"></a>
